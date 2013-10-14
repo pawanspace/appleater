@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<title>Samosa eater</title>
+
+		<style type="text/css">
+
+			.arena{
+				width: 100%;
+				height: 500px;
+				background-color: #000000;
+				position: fixed;
+			}
+
+			.earth{
+				width: 100%;
+				height: 138px;
+				background-color: greenyellow;
+				margin-top: -99px;
+				position: relative;
+			}
+
+			.ninja{
+				margin-top: 200px;
+				position: fixed;
+			}
+
+			.foot-ninja{
+				margin-top: 210px;
+				margin-left: 77px;
+			}
+
+
+			
+			.ninja-animate{
+				-webkit-animation-duration: 1s;
+				animation-duration: 1s;
+				-webkit-animation-name: jump;
+				animation-name: jump;
+				-webkit-animation-timing-function: ease;
+				animation-timing-function: ease;
+				-webkit-animation-iteration-count: 1;
+				animation-iteration-count: 1;
+				-webkit-animation-direction: normal;
+				animation-direction: normal;
+			}
+
+			.slideInDown {
+				-webkit-animation-duration: 10s;
+				-webkit-animation-timing-function: ease;
+				-webkit-animation-name: slideInDown;
+				-webkit-animation-iteration-count: 1;
+				width: 50px;
+				height: 0px;
+				z-index: 3;
+				display: inline;
+				position: absolute;
+			}
+
+
+
+
+			@-webkit-keyframes jump{
+				50%{
+					margin-top: -140px;
+				}
+				
+				100%{
+					margin-top: 200px;		
+				}
+
+			}
+
+	
+
+			@-webkit-keyframes swing {
+				20%, 40%, 60%, 80%, 100% { -webkit-transform-origin: initial; }
+				20% { -webkit-transform: rotate(5deg); }
+				40% { -webkit-transform: rotate(-5deg);}
+				60% { -webkit-transform: rotate(5deg); }
+				80% { -webkit-transform: rotate(-5deg);}
+				100% { -webkit-transform: rotate(0deg);}
+			}
+
+			@-webkit-keyframes slideInDown {
+				0% {
+					-webkit-transform: translateY(0px);
+				}
+
+				100% {
+					opacity: 0;
+					-webkit-transform: translateY(400px);
+				}
+			}
+
+
+
+		</style>
+
+
+	</head>
+
+	<body>
+		<div id="arena" class="arena">
+		</div>
+		<div  id="ninja" class="ninja">
+				<img src="small_android.jpg" class="ninja">
+		</div>
+
+		
+		<script type="text/javascript">
+
+			function getRandomInt(min, max) {
+			  return Math.floor(Math.random() * (max - min + 1) + min);
+			}
+			
+			document.body.onload = function(){
+				var arenaDiv  = document.getElementById("arena");
+
+				var arrayForRemoval = [];
+				function recursive(){
+
+					for (var i = 0; i < arrayForRemoval.length; i++) {
+						arenaDiv.removeChild(arrayForRemoval[i]);
+					}
+
+					arrayForRemoval = [];
+					var appleDivMain = document.createElement('div');
+					var numberOfApples = getRandomInt(2, 6);
+					for (var i = 0; i < numberOfApples; i++) {
+						var leftMargin = getRandomInt(100, arena.offsetWidth);
+						var topMargin = getRandomInt(0, 100);
+						var appleDiv = document.createElement('div');
+						appleDiv.classList.add('slideInDown');
+						appleDiv.style.marginLeft = leftMargin+"px";
+						appleDiv.style.marginTop = topMargin+"px";
+						appleDiv.innerHTML = '<img src="small-apple.gif">';
+						appleDivMain.insertBefore(appleDiv, appleDivMain.firstChild);
+					}
+					arrayForRemoval[0] = appleDivMain;
+					arenaDiv.insertBefore(appleDivMain, arenaDiv.firstChild);
+
+					setTimeout(recursive, 4000);
+				}
+				
+				recursive();
+
+				var ninja = {};
+
+				ninja.jump = function(){
+
+					var ele  = document.getElementById("ninja");
+					ele.classList.remove("ninja-animate")
+					setTimeout(function(){ele.classList.add("ninja-animate")}, 1);
+				
+				}
+
+				ninja.walkForward = function(){
+					
+					var ele2  = document.getElementById("ninja");
+					var nextPosition = parseInt(ele2.style.marginLeft.substring(0,ele2.style.marginLeft.indexOf('p')))+50;
+
+
+					var arena  = document.getElementById("arena");
+					if(nextPosition > (arena.offsetWidth -200)){
+						nextPosition = (arena.offsetWidth -200);
+					}
+
+					if(isNaN(nextPosition)){
+						nextPosition = 100;
+					}	
+					var walkStyle = '-webkit-transition-property: margin-left;-webkit-transition-duration: 0.5s; -webkit-transition-timing-function: linear; margin-left: '+nextPosition+'px;';
+					ele2.style.cssText = walkStyle;
+			
+				}
+
+
+				ninja.walkBackward = function(){
+					
+					var ele2  = document.getElementById("ninja");
+					var nextPosition = parseInt(ele2.style.marginLeft.substring(0,ele2.style.marginLeft.indexOf('p')))-50;
+
+
+					var arena  = document.getElementById("arena");
+					if(nextPosition < (arena.offsetLeft-10)){
+						nextPosition = (arena.offsetLeft-10);
+					}
+
+					if(isNaN(nextPosition)){
+						nextPosition = -100;
+					}	
+					var walkStyle = '-webkit-transition-property: margin-left;-webkit-transition-duration: 0.5s; -webkit-transition-timing-function: linear; margin-left: '+nextPosition+'px;';
+					ele2.style.cssText = walkStyle;
+			
+				}
+
+
+				function handleAnimation(event){
+
+
+					if(event.keyCode === 38){
+						ninja.jump();
+					}
+
+					if(event.keyCode === 39){
+						ninja.walkForward();
+					}
+
+					if(event.keyCode === 37){
+						ninja.walkBackward();
+					}
+
+				}	
+
+				window.addEventListener("keydown", handleAnimation);
+
+
+			}
+
+
+		</script>
+
+
+	</body>
+
+</html>
