@@ -130,7 +130,7 @@
 					var numberOfApples = getRandomInt(2, 6);
 					for (var i = 0; i < numberOfApples; i++) {
 						var leftMargin = getRandomInt(100, arena.offsetWidth);
-						var topMargin = getRandomInt(0, 100);
+						var topMargin = getRandomInt(0, 0);
 						var appleDiv = document.createElement('div');
 						appleDiv.classList.add('slideInDown');
 						appleDiv.style.marginLeft = leftMargin+"px";
@@ -170,7 +170,7 @@
 					if(isNaN(nextPosition)){
 						nextPosition = 100;
 					}	
-					var walkStyle = '-webkit-transition-property: margin-left;-webkit-transition-duration: 0.5s; -webkit-transition-timing-function: linear; margin-left: '+nextPosition+'px;';
+					var walkStyle = '-webkit-transition-property: margin-left;-webkit-transition-duration: 0.1s; -webkit-transition-timing-function: linear; margin-left: '+nextPosition+'px;';
 					ele2.style.cssText = walkStyle;
 			
 				}
@@ -190,7 +190,7 @@
 					if(isNaN(nextPosition)){
 						nextPosition = -100;
 					}	
-					var walkStyle = '-webkit-transition-property: margin-left;-webkit-transition-duration: 0.5s; -webkit-transition-timing-function: linear; margin-left: '+nextPosition+'px;';
+					var walkStyle = '-webkit-transition-property: margin-left;-webkit-transition-duration: 0.1s; -webkit-transition-timing-function: linear; margin-left: '+nextPosition+'px;';
 					ele2.style.cssText = walkStyle;
 			
 				}
